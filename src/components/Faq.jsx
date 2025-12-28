@@ -4,24 +4,24 @@ import { ChevronDown } from 'lucide-react';
 
 const faqs = [
   {
-    question: 'What technologies do you specialize in?',
-    answer: 'I specialize in modern web technologies including React, Next.js, TypeScript, Tailwind CSS, and various animation libraries like Framer Motion and GSAP. I also work with headless CMS platforms and API integrations.',
+    question: 'What technologies does your team specialize in?',
+    answer: 'We specialize in modern web technologies including React, Next.js, TypeScript, Tailwind CSS, and various animation libraries like Framer Motion and GSAP. We also work with headless CMS platforms, automation tools, and AI integrations.',
   },
   {
     question: 'How does your pricing work?',
-    answer: 'I offer both fixed-price and hourly rate options depending on project scope. For most projects, I provide a detailed quote after understanding your requirements. This ensures transparency and helps align expectations from the start.',
+    answer: 'We offer both fixed-price and hourly rate options depending on project scope. For most projects, we provide a detailed quote after understanding your requirements. This ensures transparency and helps align expectations from the start.',
   },
   {
     question: 'What is your typical project timeline?',
-    answer: 'Timeline varies based on project complexity. A simple landing page typically takes 1-2 weeks, while a full website or web application can take 4-8 weeks. I\'ll provide a detailed timeline estimate during our initial consultation.',
+    answer: 'Timeline varies based on project complexity. A simple landing page typically takes 1-2 weeks, while a full website or web application can take 4-8 weeks. We\'ll provide a detailed timeline estimate during our initial consultation.',
   },
   {
     question: 'Do you offer ongoing maintenance and support?',
-    answer: 'Yes! I offer maintenance packages that include regular updates, security patches, content changes, and technical support. This ensures your website stays current and performs optimally.',
+    answer: 'Yes! We offer maintenance packages that include regular updates, security patches, content changes, and technical support. This ensures your website stays current and performs optimally.',
   },
   {
-    question: 'Can I request revisions during the project?',
-    answer: 'Absolutely. My process includes revision rounds at key milestones. I work collaboratively with clients to ensure the final product exceeds expectations. Open communication is key to successful projects.',
+    question: 'Can we request revisions during the project?',
+    answer: 'Absolutely. Our process includes revision rounds at key milestones. We work collaboratively with clients to ensure the final product exceeds expectations. Open communication is key to successful projects.',
   },
 ];
 
@@ -75,39 +75,37 @@ const Faq = () => {
   return (
     <section id="faq" className="relative py-24 md:py-32 overflow-hidden">
       <div className="section-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
-          {/* Left Side - Header */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="lg:sticky lg:top-32 lg:self-start"
-          >
-            <span className="label-badge mb-4">FAQ</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-              Common{' '}
-              <span className="text-gradient-teal">questions</span>
-            </h2>
-            <p className="text-muted-foreground text-lg mb-8">
-              Can&apos;t find what you&apos;re looking for? Feel free to reach out directly.
-            </p>
-            <a href="#contact" className="btn-primary inline-flex items-center gap-2">
-              Contact Me
-            </a>
-          </motion.div>
+        {/* Section Header - Centered */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <span className="label-badge mb-4">FAQ</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
+            Common{' '}
+            <span className="text-gradient-bronze">questions</span>
+          </h2>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
+            Can&apos;t find what you&apos;re looking for? Feel free to reach out directly.
+          </p>
+          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+            Contact Us
+          </a>
+        </motion.div>
 
-          {/* Right Side - FAQ Items */}
-          <div ref={ref} className="flex flex-col gap-4">
-            {faqs.map((faq, index) => (
-              <FaqItem
-                key={index}
-                faq={faq}
-                isOpen={openIndex === index}
-                onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                index={index}
-              />
-            ))}
-          </div>
+        {/* FAQ Items */}
+        <div ref={ref} className="max-w-3xl mx-auto flex flex-col gap-4">
+          {faqs.map((faq, index) => (
+            <FaqItem
+              key={index}
+              faq={faq}
+              isOpen={openIndex === index}
+              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              index={index}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Code, Palette, Zap, Search, Layers, Globe } from 'lucide-react';
+import { Code, Zap, Search, Bot, Smartphone, Workflow } from 'lucide-react';
 
 const services = [
   {
@@ -11,31 +11,31 @@ const services = [
     color: 'primary',
   },
   {
-    icon: Palette,
-    title: 'UI/UX Design',
-    description: 'Creating intuitive interfaces and seamless user experiences that delight users.',
+    icon: Workflow,
+    title: 'Automation & Workflows',
+    description: 'Streamlining your operations with smart automation and seamless integrations.',
     color: 'secondary',
-  },
-  {
-    icon: Zap,
-    title: 'Animation & Motion',
-    description: 'Bringing websites to life with smooth, purposeful animations and micro-interactions.',
-    color: 'accent',
   },
   {
     icon: Search,
     title: 'SEO Optimization',
     description: 'Improving search rankings with technical SEO and performance optimization.',
+    color: 'accent',
+  },
+  {
+    icon: Bot,
+    title: 'AI Agents & Integrations',
+    description: 'Implementing intelligent AI solutions that automate and enhance your business.',
     color: 'primary',
   },
   {
-    icon: Layers,
-    title: 'CMS Integration',
-    description: 'Implementing content management systems for easy content updates and scalability.',
+    icon: Smartphone,
+    title: 'App Development',
+    description: 'Creating mobile and web applications with intuitive user experiences.',
     color: 'secondary',
   },
   {
-    icon: Globe,
+    icon: Zap,
     title: 'API Integration',
     description: 'Connecting applications with third-party services and building custom APIs.',
     color: 'accent',
@@ -84,7 +84,7 @@ const Services = () => {
   return (
     <section id="services" className="relative py-24 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 spotlight-violet opacity-50 pointer-events-none" />
+      <div className="absolute inset-0 spotlight-bronze opacity-50 pointer-events-none" />
       
       <div className="section-container relative z-10">
         {/* Section Header */}
@@ -96,13 +96,13 @@ const Services = () => {
         >
           <span className="label-badge mb-4">Services</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-            I can help you build{' '}
-            <span className="text-gradient-teal">better</span>
+            We help you build{' '}
+            <span className="text-gradient-bronze">better</span>
             <br className="hidden sm:block" />
-            online experiences
+            digital experiences
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            From concept to deployment, I offer comprehensive web development and design services
+            From concept to deployment, our team offers comprehensive development and automation services
             tailored to your unique needs.
           </p>
         </motion.div>

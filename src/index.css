@@ -6,61 +6,65 @@
 
 @layer base {
   :root {
-    /* Premium Dark Theme */
-    --background: 222 47% 2%;
-    --foreground: 220 13% 91%;
+    /* Brown/Bronze Premium Dark Theme */
+    --background: 20 10% 4%;
+    --foreground: 35 20% 90%;
     
-    --card: 222 47% 3%;
-    --card-foreground: 220 13% 91%;
+    --card: 20 12% 6%;
+    --card-foreground: 35 20% 90%;
     
-    --popover: 222 47% 3%;
-    --popover-foreground: 220 13% 91%;
+    --popover: 20 12% 6%;
+    --popover-foreground: 35 20% 90%;
     
-    --primary: 187 85% 53%;
-    --primary-foreground: 222 47% 5%;
+    /* Bronze/Copper Primary */
+    --primary: 30 60% 50%;
+    --primary-foreground: 20 10% 4%;
     
-    --secondary: 263 70% 50%;
-    --secondary-foreground: 220 13% 91%;
+    /* Warm Brown Secondary */
+    --secondary: 25 40% 35%;
+    --secondary-foreground: 35 20% 90%;
     
-    --muted: 222 30% 10%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 20 15% 12%;
+    --muted-foreground: 30 10% 55%;
     
-    --accent: 43 96% 56%;
-    --accent-foreground: 222 47% 5%;
+    /* Stone Accent */
+    --accent: 35 25% 45%;
+    --accent-foreground: 20 10% 4%;
     
     --destructive: 0 84% 60%;
-    --destructive-foreground: 220 13% 91%;
+    --destructive-foreground: 35 20% 90%;
     
-    --border: 220 13% 15%;
-    --input: 220 13% 15%;
-    --ring: 187 85% 53%;
+    --border: 30 15% 15%;
+    --input: 30 15% 15%;
+    --ring: 30 60% 50%;
     
     --radius: 0.75rem;
     
-    /* Custom Colors */
-    --deep: 222 47% 2%;
-    --deep-alt: 230 45% 3%;
-    --teal: 187 85% 53%;
-    --teal-glow: 187 85% 53%;
-    --violet: 263 70% 50%;
-    --violet-glow: 263 70% 60%;
-    --amber: 43 96% 56%;
+    /* Custom Colors - Brown/Bronze Palette */
+    --deep: 20 10% 4%;
+    --deep-alt: 20 12% 6%;
+    --bronze: 30 60% 50%;
+    --bronze-glow: 30 55% 40%;
+    --copper: 25 50% 40%;
+    --copper-glow: 25 45% 50%;
+    --stone: 35 15% 30%;
+    --warm-grey: 30 8% 20%;
     
     /* Gradients */
-    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(187 85% 53% / 0.15), transparent);
-    --gradient-card: linear-gradient(135deg, hsl(222 47% 4%) 0%, hsl(230 45% 6%) 50%, hsl(222 47% 3%) 100%);
-    --gradient-glow-teal: 0 0 60px hsl(187 85% 53% / 0.3);
-    --gradient-glow-violet: 0 0 60px hsl(263 70% 50% / 0.3);
+    --gradient-hero: radial-gradient(ellipse 80% 50% at 50% -20%, hsl(30 60% 50% / 0.12), transparent);
+    --gradient-card: linear-gradient(135deg, hsl(20 12% 6%) 0%, hsl(20 15% 8%) 50%, hsl(20 10% 5%) 100%);
+    --gradient-glow-bronze: 0 0 60px hsl(30 60% 50% / 0.25);
+    --gradient-glow-copper: 0 0 60px hsl(25 50% 40% / 0.25);
     
     /* Sidebar */
-    --sidebar-background: 222 47% 3%;
-    --sidebar-foreground: 220 13% 91%;
-    --sidebar-primary: 187 85% 53%;
-    --sidebar-primary-foreground: 222 47% 5%;
-    --sidebar-accent: 222 30% 10%;
-    --sidebar-accent-foreground: 220 13% 91%;
-    --sidebar-border: 220 13% 15%;
-    --sidebar-ring: 187 85% 53%;
+    --sidebar-background: 20 12% 6%;
+    --sidebar-foreground: 35 20% 90%;
+    --sidebar-primary: 30 60% 50%;
+    --sidebar-primary-foreground: 20 10% 4%;
+    --sidebar-accent: 20 15% 12%;
+    --sidebar-accent-foreground: 35 20% 90%;
+    --sidebar-border: 30 15% 15%;
+    --sidebar-ring: 30 60% 50%;
   }
 }
 
@@ -82,7 +86,7 @@
 @layer components {
   .glass-card {
     @apply bg-gradient-to-br from-card via-muted/20 to-card border border-white/5 backdrop-blur-xl;
-    box-shadow: 0 0 40px hsl(var(--teal) / 0.05), inset 0 1px 0 0 hsl(0 0% 100% / 0.03);
+    box-shadow: 0 0 40px hsl(var(--bronze) / 0.05), inset 0 1px 0 0 hsl(0 0% 100% / 0.03);
   }
   
   .glass-card-hover {
@@ -91,28 +95,28 @@
   
   .glass-card-hover:hover {
     @apply border-primary/20;
-    box-shadow: 0 0 60px hsl(var(--teal) / 0.15), inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
+    box-shadow: 0 0 60px hsl(var(--bronze) / 0.12), inset 0 1px 0 0 hsl(0 0% 100% / 0.05);
     transform: translateY(-4px);
   }
   
-  .glow-teal {
-    box-shadow: 0 0 40px hsl(var(--teal) / 0.25), 0 0 80px hsl(var(--teal) / 0.1);
+  .glow-bronze {
+    box-shadow: 0 0 40px hsl(var(--bronze) / 0.25), 0 0 80px hsl(var(--bronze) / 0.1);
   }
   
-  .glow-violet {
-    box-shadow: 0 0 40px hsl(var(--violet) / 0.25), 0 0 80px hsl(var(--violet) / 0.1);
+  .glow-copper {
+    box-shadow: 0 0 40px hsl(var(--copper) / 0.25), 0 0 80px hsl(var(--copper) / 0.1);
   }
   
-  .glow-amber {
-    box-shadow: 0 0 30px hsl(var(--amber) / 0.2);
+  .glow-stone {
+    box-shadow: 0 0 30px hsl(var(--stone) / 0.2);
   }
   
-  .text-gradient-teal {
-    @apply bg-gradient-to-r from-primary to-cyan-300 bg-clip-text text-transparent;
+  .text-gradient-bronze {
+    @apply bg-gradient-to-r from-primary to-amber-300 bg-clip-text text-transparent;
   }
   
-  .text-gradient-violet {
-    @apply bg-gradient-to-r from-secondary to-purple-300 bg-clip-text text-transparent;
+  .text-gradient-copper {
+    @apply bg-gradient-to-r from-secondary to-orange-300 bg-clip-text text-transparent;
   }
   
   .btn-primary {
@@ -130,12 +134,12 @@
   }
   
   .btn-primary:hover {
-    box-shadow: 0 0 30px hsl(var(--teal) / 0.4), 0 0 60px hsl(var(--teal) / 0.2);
+    box-shadow: 0 0 30px hsl(var(--bronze) / 0.4), 0 0 60px hsl(var(--bronze) / 0.2);
     transform: translateY(-2px);
   }
   
   .btn-secondary {
-    @apply px-6 py-3 bg-transparent border border-white/10 text-foreground font-medium rounded-xl transition-all duration-300 hover:bg-white/5 hover:border-white/20;
+    @apply px-6 py-3 bg-transparent border border-white/10 text-foreground font-medium rounded-xl transition-all duration-300 hover:bg-white/5 hover:border-primary/30;
   }
   
   .nav-link {
@@ -152,11 +156,15 @@
   }
   
   .spotlight {
-    background: radial-gradient(ellipse 60% 40% at 50% 0%, hsl(var(--teal) / 0.12) 0%, transparent 60%);
+    background: radial-gradient(ellipse 60% 40% at 50% 0%, hsl(var(--bronze) / 0.1) 0%, transparent 60%);
   }
   
-  .spotlight-violet {
-    background: radial-gradient(ellipse 50% 50% at 50% 50%, hsl(var(--violet) / 0.08) 0%, transparent 70%);
+  .spotlight-bronze {
+    background: radial-gradient(ellipse 50% 50% at 50% 50%, hsl(var(--bronze) / 0.06) 0%, transparent 70%);
+  }
+  
+  .spotlight-copper {
+    background: radial-gradient(ellipse 50% 50% at 50% 50%, hsl(var(--copper) / 0.06) 0%, transparent 70%);
   }
   
   .label-badge {
@@ -180,6 +188,10 @@
   .animate-glow-pulse {
     animation: glow-pulse 3s ease-in-out infinite;
   }
+  
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
 }
 
 @keyframes float {
@@ -193,10 +205,19 @@
 
 @keyframes glow-pulse {
   0%, 100% {
-    box-shadow: 0 0 30px hsl(var(--teal) / 0.2);
+    box-shadow: 0 0 30px hsl(var(--bronze) / 0.2);
   }
   50% {
-    box-shadow: 0 0 50px hsl(var(--teal) / 0.4);
+    box-shadow: 0 0 50px hsl(var(--bronze) / 0.4);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
   }
 }
 
