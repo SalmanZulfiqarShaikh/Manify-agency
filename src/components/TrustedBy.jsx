@@ -26,23 +26,41 @@ const TrustedBy = () => {
         </motion.div>
       </div>
 
-      {/* Marquee Container */}
+      {/* Marquee Container - Infinite Seamless Loop */}
       <div className="relative w-full overflow-hidden">
-        <div className="flex animate-marquee-slow">
-          {[...logos, ...logos, ...logos, ...logos].map((logo, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 mx-8 md:mx-12 flex items-center justify-center"
-              style={{ minWidth: '120px' }}
-            >
-              <img
-                src={logo.src}
-                alt={logo.name}
-                className="h-8 md:h-10 w-auto object-contain opacity-50 hover:opacity-80 transition-opacity duration-300 grayscale hover:grayscale-0"
-                style={{ filter: 'brightness(0) invert(1)', opacity: 0.4 }}
-              />
-            </div>
-          ))}
+        <div className="flex">
+          <div className="flex animate-marquee-infinite">
+            {[...logos, ...logos].map((logo, index) => (
+              <div
+                key={`a-${index}`}
+                className="flex-shrink-0 mx-8 md:mx-12 flex items-center justify-center"
+                style={{ minWidth: '120px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="h-8 md:h-10 w-auto object-contain"
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.4 }}
+                />
+              </div>
+            ))}
+          </div>
+          <div className="flex animate-marquee-infinite">
+            {[...logos, ...logos].map((logo, index) => (
+              <div
+                key={`b-${index}`}
+                className="flex-shrink-0 mx-8 md:mx-12 flex items-center justify-center"
+                style={{ minWidth: '120px' }}
+              >
+                <img
+                  src={logo.src}
+                  alt={logo.name}
+                  className="h-8 md:h-10 w-auto object-contain"
+                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.4 }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

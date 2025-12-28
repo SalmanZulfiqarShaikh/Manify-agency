@@ -185,10 +185,7 @@ const Contact = () => {
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
               <CheckCircle size={18} className="text-foreground" />
             </div>
-            <div>
-              <p className="text-foreground font-medium">Message sent!</p>
-              <p className="text-muted-foreground text-sm">Your email client should open. Complete sending from there.</p>
-            </div>
+            <p className="text-foreground font-medium">Email sent</p>
             <button 
               onClick={() => setShowToast(false)}
               className="ml-4 text-muted-foreground hover:text-foreground transition-colors"
