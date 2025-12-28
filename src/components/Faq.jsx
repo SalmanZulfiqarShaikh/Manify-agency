@@ -2,26 +2,28 @@ import { useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
+const WHATSAPP_LINK = 'https://wa.me/923357947721';
+
 const faqs = [
   {
-    question: 'What technologies does your team specialize in?',
-    answer: 'We specialize in modern web technologies including React, Next.js, TypeScript, Tailwind CSS, and various animation libraries like Framer Motion and GSAP. We also work with headless CMS platforms, automation tools, and AI integrations.',
+    question: 'How do you build AI automations or n8n workflows?',
+    answer: 'We design custom AI automations and n8n workflows tailored to your business needs. This includes connecting various APIs, setting up triggers, and creating intelligent decision trees that automate repetitive tasks and enhance productivity.',
   },
   {
-    question: 'How does your pricing work?',
-    answer: 'We offer both fixed-price and hourly rate options depending on project scope. For most projects, we provide a detailed quote after understanding your requirements. This ensures transparency and helps align expectations from the start.',
+    question: 'What tools do you use for automation and AI agents?',
+    answer: 'We work with n8n, Make (Integromat), Zapier, and custom solutions. For AI agents, we leverage OpenAI, Anthropic, and other LLM providers to build intelligent systems that can handle customer support, data processing, and workflow automation.',
+  },
+  {
+    question: 'How can automation help my product or MVP?',
+    answer: 'Automation reduces manual work, speeds up processes, and ensures consistency. For MVPs, it helps you validate ideas faster without hiring a large team. From lead nurturing to data sync and notifications, automation keeps your product running smoothly.',
   },
   {
     question: 'What is your typical project timeline?',
-    answer: 'Timeline varies based on project complexity. A simple landing page typically takes 1-2 weeks, while a full website or web application can take 4-8 weeks. We\'ll provide a detailed timeline estimate during our initial consultation.',
+    answer: 'Timeline varies based on project complexity. A simple automation or landing page typically takes 1-2 weeks, while a full product or web application can take 4-8 weeks. We provide a detailed timeline estimate during our initial consultation.',
   },
   {
     question: 'Do you offer ongoing maintenance and support?',
-    answer: 'Yes! We offer maintenance packages that include regular updates, security patches, content changes, and technical support. This ensures your website stays current and performs optimally.',
-  },
-  {
-    question: 'Can we request revisions during the project?',
-    answer: 'Absolutely. Our process includes revision rounds at key milestones. We work collaboratively with clients to ensure the final product exceeds expectations. Open communication is key to successful projects.',
+    answer: 'Yes! We offer maintenance packages that include regular updates, security patches, workflow monitoring, and technical support. This ensures your automations and products stay current and perform optimally.',
   },
 ];
 
@@ -90,7 +92,12 @@ const Faq = () => {
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             Can&apos;t find what you&apos;re looking for? Feel free to reach out directly.
           </p>
-          <a href="#contact" className="btn-primary inline-flex items-center gap-2">
+          <a 
+            href={WHATSAPP_LINK}
+            target="_blank"
+            rel="noreferrer"
+            className="btn-primary inline-flex items-center gap-2"
+          >
             Contact Us
           </a>
         </motion.div>

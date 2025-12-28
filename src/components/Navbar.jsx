@@ -10,6 +10,9 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 
+const WHATSAPP_LINK = 'https://wa.me/923357947721';
+const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -23,13 +26,13 @@ const Navbar = () => {
       <nav className="bg-background/60 backdrop-blur-xl border-b border-white/5">
         <div className="section-container">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <a href="#" className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">M</span>
-              </div>
-              <span className="text-foreground font-semibold text-lg hidden sm:block">
-                Manify<span className="text-primary">.</span>
+            {/* Logo - Elegant "M" */}
+            <a href="#" className="flex items-center">
+              <span 
+                className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tight"
+                style={{ fontFamily: 'Georgia, Times New Roman, serif' }}
+              >
+                M
               </span>
             </a>
 
@@ -48,7 +51,12 @@ const Navbar = () => {
 
             {/* CTA Button */}
             <div className="hidden md:flex items-center gap-4">
-              <a href="#contact" className="btn-primary text-sm">
+              <a 
+                href={WHATSAPP_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-primary text-sm"
+              >
                 Book a Call
               </a>
             </div>
@@ -89,7 +97,9 @@ const Navbar = () => {
                   </motion.a>
                 ))}
                 <motion.a
-                  href="#contact"
+                  href={WHATSAPP_LINK}
+                  target="_blank"
+                  rel="noreferrer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}

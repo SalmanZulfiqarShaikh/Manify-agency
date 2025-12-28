@@ -54,7 +54,7 @@ const Process = () => {
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             You&apos;re <span className="text-gradient-light">5 steps</span> away
             <br className="hidden sm:block" />
-            from a new website
+            from a new product
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             A streamlined process designed to deliver exceptional results efficiently.
