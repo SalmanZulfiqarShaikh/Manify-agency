@@ -8,7 +8,7 @@ const projectImages = [
   'https://s3-alpha.figma.com/hub/file/5399439708/200334e3-04ba-4ce8-a267-17357790d405-cover.png',
 ];
 
-const WHATSAPP_LINK = 'https://wa.me/923357947721';
+const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 const Hero = () => {
@@ -142,8 +142,8 @@ const Hero = () => {
                 href={GITHUB_LINK}
                 target="_blank"
                 rel="noreferrer"
-                className={`flex-shrink-0 mx-6 rounded-2xl overflow-hidden border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
-                style={{ width: '420px', height: '300px' }}
+                className={`flex-shrink-0 mx-4 rounded-2xl overflow-hidden border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
+                style={{ width: '320px', height: '220px' }}
               >
                 <img 
                   src={img} 

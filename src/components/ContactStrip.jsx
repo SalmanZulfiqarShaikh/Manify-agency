@@ -2,8 +2,9 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { ArrowRight, Sparkles, ExternalLink, Handshake } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme.jsx';
 
-const WHATSAPP_LINK = 'https://wa.me/923357947721';
+const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 // SVG Icons for platforms
@@ -13,42 +14,50 @@ const UpworkIcon = () => (
   </svg>
 );
 
-const FiverrIcon = () => (
-  <img 
-    src="https://logos-world.net/wp-content/uploads/2020/12/Fiverr-Logo.png" 
-    alt="Fiverr" 
-    className="w-10 h-8 object-contain"
-    style={{ filter: 'brightness(0) invert(1)' }}
-  />
+const FiverrIcon = ({ theme }) => (
+  <div className="w-16 h-10 flex items-center justify-center">
+    <img 
+      src="https://logos-world.net/wp-content/uploads/2020/12/Fiverr-Logo.png" 
+      alt="Fiverr" 
+      className="w-full h-full object-contain"
+      style={{ filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'grayscale(100%)' }}
+      onError={(e) => {
+        e.target.style.display = 'none';
+        e.target.parentElement.innerHTML = '<span class="text-lg font-bold">Fiverr</span>';
+      }}
+    />
+  </div>
 );
 
-const platforms = [
-  {
-    name: 'Hire on Upwork',
-    description: 'Top-rated team with 100% job success',
-    link: '#',
-    badge: 'Top Rated',
-    icon: UpworkIcon,
-  },
-  {
-    name: 'Hire on Fiverr',
-    description: 'Level 2 seller with excellent reviews',
-    link: '#',
-    badge: 'Level 2',
-    icon: FiverrIcon,
-  },
-  {
-    name: 'Direct Hire',
-    description: 'Work with us directly for the best rates',
-    link: WHATSAPP_LINK,
-    badge: 'Recommended',
-    icon: () => <Handshake className="w-8 h-8" />,
-  },
-];
 
 const ContactStrip = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const { theme } = useTheme();
+  
+  const platforms = [
+    {
+      name: 'Hire on Upwork',
+      description: 'Top-rated team with 100% job success',
+      link: '#',
+      badge: 'Top Rated',
+      icon: UpworkIcon,
+    },
+    {
+      name: 'Hire on Fiverr',
+      description: 'Level 2 seller with excellent reviews',
+      link: '#',
+      badge: 'Level 2',
+      icon: () => <FiverrIcon theme={theme} />,
+    },
+    {
+      name: 'Direct Hire',
+      description: 'Work with us directly for the best rates',
+      link: WHATSAPP_LINK,
+      badge: 'Recommended',
+      icon: () => <Handshake className="w-8 h-8" />,
+    },
+  ];
 
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-deep-alt/30">

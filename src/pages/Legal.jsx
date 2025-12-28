@@ -40,10 +40,6 @@ const imageCredits = [
     url: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg',
   },
   {
-    description: 'Coursera Logo (Wikipedia)',
-    url: 'https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg',
-  },
-  {
     description: 'Oracle Logo (Wikipedia)',
     url: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg',
   },

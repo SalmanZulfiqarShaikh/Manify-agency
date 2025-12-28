@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
+import { useTheme } from '../hooks/useTheme.jsx';
 
 const logos = [
   { name: "Google", src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-  { name: "Coursera", src: "https://upload.wikimedia.org/wikipedia/commons/9/97/Coursera-Logo_600x600.svg" },
   { name: "Oracle", src: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" },
   { name: "Zapier", src: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zapier_logo.svg" },
   { name: "Reddit", src: "https://images.icon-icons.com/2972/PNG/512/reddit_logo_icon_186876.png" },
@@ -10,6 +10,12 @@ const logos = [
 ];
 
 const TrustedBy = () => {
+  const { theme } = useTheme();
+  
+  const logoStyle = theme === 'dark' 
+    ? { filter: 'brightness(0) invert(1)', opacity: 0.4 }
+    : { filter: 'grayscale(100%)', opacity: 0.5 };
+
   return (
     <section className="py-16 md:py-20 overflow-hidden bg-background">
       <div className="section-container">
@@ -40,7 +46,7 @@ const TrustedBy = () => {
                   src={logo.src}
                   alt={logo.name}
                   className="h-8 md:h-10 w-auto object-contain"
-                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.4 }}
+                  style={logoStyle}
                 />
               </div>
             ))}
@@ -56,7 +62,7 @@ const TrustedBy = () => {
                   src={logo.src}
                   alt={logo.name}
                   className="h-8 md:h-10 w-auto object-contain"
-                  style={{ filter: 'brightness(0) invert(1)', opacity: 0.4 }}
+                  style={logoStyle}
                 />
               </div>
             ))}
