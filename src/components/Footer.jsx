@@ -95,7 +95,7 @@ const Footer = () => {
               in <PakistanFlag /> Pakistan
             </p>
             <p className="text-sm text-muted-foreground">
-              by <span className="text-foreground font-medium glow-text">Salman Zulfiqar</span> Shaikh
+              by <span className="text-foreground font-medium glow-text">Salman Zulfiqar Shaikh</span>
             </p>
           </motion.div>
 
