@@ -52,13 +52,13 @@ const ContactStrip = () => {
               initial={{ scale: 0 }}
               animate={isInView ? { scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-bronze"
+              className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center glow-neutral"
             >
-              <Sparkles size={36} className="text-primary-foreground" />
+              <Sparkles size={36} className="text-foreground" />
             </motion.div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Already have a <span className="text-gradient-copper">design</span>?
+              Already have a <span className="text-gradient-light">design</span>?
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
               Let us turn it into a live website — clean, fast, and conversion-ready. 

@@ -85,7 +85,7 @@ const Faq = () => {
           <span className="label-badge mb-4">FAQ</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             Common{' '}
-            <span className="text-gradient-bronze">questions</span>
+            <span className="text-gradient-light">questions</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
             Can&apos;t find what you&apos;re looking for? Feel free to reach out directly.

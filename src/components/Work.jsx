@@ -50,7 +50,7 @@ const Work = () => {
         >
           <span className="label-badge mb-4">Selected Work</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Recent <span className="text-gradient-bronze">projects</span>
+            Recent <span className="text-gradient-light">projects</span>
           </h2>
           <a 
             href="#contact" 
