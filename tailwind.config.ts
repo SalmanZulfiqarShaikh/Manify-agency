@@ -26,16 +26,20 @@ export default {
           DEFAULT: "hsl(var(--deep))",
           alt: "hsl(var(--deep-alt))",
         },
-        bronze: {
-          DEFAULT: "hsl(var(--bronze))",
-          glow: "hsl(var(--bronze-glow))",
+        "neutral-light": {
+          DEFAULT: "hsl(var(--neutral-light))",
         },
-        copper: {
-          DEFAULT: "hsl(var(--copper))",
-          glow: "hsl(var(--copper-glow))",
+        "neutral-glow": {
+          DEFAULT: "hsl(var(--neutral-glow))",
         },
-        stone: {
-          DEFAULT: "hsl(var(--stone))",
+        "neutral-mid": {
+          DEFAULT: "hsl(var(--neutral-mid))",
+        },
+        "neutral-dark": {
+          DEFAULT: "hsl(var(--neutral-dark))",
+        },
+        charcoal: {
+          DEFAULT: "hsl(var(--charcoal))",
         },
         "warm-grey": {
           DEFAULT: "hsl(var(--warm-grey))",
@@ -106,8 +110,8 @@ export default {
           "50%": { transform: "translateY(-20px) rotate(2deg)" },
         },
         "glow-pulse": {
-          "0%, 100%": { boxShadow: "0 0 30px hsl(var(--bronze) / 0.2)" },
-          "50%": { boxShadow: "0 0 50px hsl(var(--bronze) / 0.4)" },
+          "0%, 100%": { boxShadow: "0 0 30px hsl(0 0% 100% / 0.05)" },
+          "50%": { boxShadow: "0 0 50px hsl(0 0% 100% / 0.1)" },
         },
         "marquee": {
           "0%": { transform: "translateX(0)" },

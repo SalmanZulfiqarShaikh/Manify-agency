@@ -84,7 +84,7 @@ const Services = () => {
   return (
     <section id="services" className="relative py-24 md:py-32 overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 spotlight-bronze opacity-50 pointer-events-none" />
+      <div className="absolute inset-0 spotlight-neutral opacity-50 pointer-events-none" />
       
       <div className="section-container relative z-10">
         {/* Section Header */}
@@ -97,7 +97,7 @@ const Services = () => {
           <span className="label-badge mb-4">Services</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
             We help you build{' '}
-            <span className="text-gradient-bronze">better</span>
+            <span className="text-gradient-light">better</span>
             <br className="hidden sm:block" />
             digital experiences
           </h2>
