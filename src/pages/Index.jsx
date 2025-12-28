@@ -5,6 +5,7 @@ import Services from '../components/Services';
 import Process from '../components/Process';
 import Faq from '../components/Faq';
 import ContactStrip from '../components/ContactStrip';
+import TrustedBy from '../components/TrustedBy';
 import Testimonials from '../components/Testimonials';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
@@ -20,6 +21,7 @@ const Index = () => {
         <Process />
         <Faq />
         <ContactStrip />
+        <TrustedBy />
         <Testimonials />
         <Contact />
       </main>

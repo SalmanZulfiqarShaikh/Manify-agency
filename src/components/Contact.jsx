@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, CheckCircle, AlertCircle, X } from 'lucide-react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const Contact = () => {
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   const validateForm = () => {
     const newErrors = {};
@@ -53,15 +53,17 @@ const Contact = () => {
     
     window.location.href = mailtoLink;
     
-    setSubmitStatus('success');
+    // Show success toast
+    setShowToast(true);
     setIsSubmitting(false);
     setFormData({ name: '', email: '', message: '' });
     
-    setTimeout(() => setSubmitStatus(null), 5000);
+    // Hide toast after 5 seconds
+    setTimeout(() => setShowToast(false), 5000);
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-deep-alt/30">
+    <section id="contact-form" className="py-20 md:py-28 bg-deep-alt/30">
       <div className="section-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -167,21 +169,35 @@ const Contact = () => {
                 </>
               )}
             </button>
-
-            {/* Success Message */}
-            {submitStatus === 'success' && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-green-400 justify-center"
-              >
-                <CheckCircle size={18} />
-                <span>Your email client should open. Send the email to complete!</span>
-              </motion.div>
-            )}
           </form>
         </motion.div>
       </div>
+
+      {/* Floating Success Toast */}
+      <AnimatePresence>
+        {showToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 50, x: '-50%' }}
+            className="fixed bottom-8 left-1/2 z-50 bg-background border border-white/20 rounded-xl px-6 py-4 shadow-2xl flex items-center gap-3"
+          >
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+              <CheckCircle size={18} className="text-foreground" />
+            </div>
+            <div>
+              <p className="text-foreground font-medium">Message sent!</p>
+              <p className="text-muted-foreground text-sm">Your email client should open. Complete sending from there.</p>
+            </div>
+            <button 
+              onClick={() => setShowToast(false)}
+              className="ml-4 text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <X size={18} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -1,36 +1,30 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { ExternalLink, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+
+const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 const projects = [
   {
-    title: 'E-Commerce Platform',
-    category: 'Web Development',
-    description: 'A modern e-commerce solution with seamless checkout experience.',
-    gradient: 'from-primary/30 via-primary/10 to-transparent',
-    accent: 'primary',
+    title: 'SEO Dashboard',
+    category: 'SEO Optimization',
+    image: 'https://cdn.dribbble.com/userupload/3727510/file/original-d5a961960f20255d075b714697306c27.png?format=webp&resize=400x300&vertical=center',
   },
   {
-    title: 'AI Workflow System',
-    category: 'Automation',
-    description: 'Intelligent automation that streamlines business operations.',
-    gradient: 'from-secondary/30 via-secondary/10 to-transparent',
-    accent: 'secondary',
+    title: 'E-Commerce Platform',
+    category: 'Web Development',
+    image: 'https://xdfile.com/wp-content/uploads/2020/03/lafyuu_ui_kit-1.jpg',
   },
   {
     title: 'Mobile Banking App',
     category: 'App Development',
-    description: 'Secure and user-friendly banking experience on mobile.',
-    gradient: 'from-accent/30 via-accent/10 to-transparent',
-    accent: 'accent',
+    image: 'https://s3-alpha.figma.com/hub/file/866576731/c42b7715-5384-42b3-8328-2e7cea2d6ddf-cover.png',
   },
   {
-    title: 'SEO Dashboard',
-    category: 'SEO Optimization',
-    description: 'Analytics platform with advanced SEO tracking features.',
-    gradient: 'from-primary/30 via-secondary/10 to-transparent',
-    accent: 'primary',
+    title: 'AI Workflow System',
+    category: 'AI Automation',
+    image: 'https://n8niostorageaccount.blob.core.windows.net/n8nio-strapi-blobs-prod/assets/image_d96a5a6593.png',
   },
 ];
 
@@ -53,7 +47,9 @@ const Work = () => {
             Recent <span className="text-gradient-light">projects</span>
           </h2>
           <a 
-            href="#contact" 
+            href={GITHUB_LINK}
+            target="_blank"
+            rel="noreferrer"
             className="btn-secondary inline-flex items-center gap-2"
           >
             View All Work
@@ -64,39 +60,42 @@ const Work = () => {
         {/* Projects Grid */}
         <div ref={ref} className="grid md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
-            <motion.div
+            <motion.a
               key={project.title}
+              href={GITHUB_LINK}
+              target="_blank"
+              rel="noreferrer"
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="group glass-card glass-card-hover rounded-2xl overflow-hidden"
             >
               {/* Project Image Area */}
-              <div className={`relative h-48 md:h-64 bg-gradient-to-br ${project.gradient}`}>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-32 h-32 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                    <ExternalLink size={32} className="text-foreground/50" />
-                  </div>
-                </div>
+              <div className="relative h-48 md:h-64 overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
                 {/* Hover Overlay */}
-                <div className="absolute inset-0 bg-background/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <span className="btn-primary text-sm">View Project</span>
+                <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                  <span className="btn-primary text-sm flex items-center gap-2">
+                    View Project
+                    <ArrowUpRight size={16} />
+                  </span>
                 </div>
               </div>
 
               {/* Project Info */}
               <div className="p-6">
-                <span className={`text-xs font-medium text-${project.accent} uppercase tracking-wider`}>
+                <span className="text-xs font-medium text-primary uppercase tracking-wider">
                   {project.category}
                 </span>
-                <h3 className="text-xl font-semibold text-foreground mt-2 mb-2">
+                <h3 className="text-xl font-semibold text-foreground mt-2">
                   {project.title}
                 </h3>
-                <p className="text-muted-foreground text-sm">
-                  {project.description}
-                </p>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </div>

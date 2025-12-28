@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Instagram, Clock, Heart } from 'lucide-react';
+import { Linkedin, Github, Instagram, Clock, Heart, Globe } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const socialLinks = [
   {
@@ -14,6 +15,12 @@ const socialLinks = [
     icon: Github,
     url: 'https://github.com/SalmanZulfiqarShaikh',
     label: 'Visit GitHub profile',
+  },
+  {
+    name: 'Website',
+    icon: Globe,
+    url: 'https://salmanzulfi.dev',
+    label: 'Visit personal website',
   },
   {
     name: 'Instagram',
@@ -117,6 +124,22 @@ const Footer = () => {
             })}
           </motion.div>
         </div>
+
+        {/* Read This Link */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className="text-center mt-8 pt-6 border-t border-white/5"
+        >
+          <Link 
+            to="/legal"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-4"
+          >
+            Read this
+          </Link>
+        </motion.div>
       </div>
 
       {/* Large Background Text */}

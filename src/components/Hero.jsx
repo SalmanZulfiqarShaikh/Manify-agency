@@ -2,13 +2,14 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const projectImages = [
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
-  '/placeholder.svg',
+  'https://preview.redd.it/from-bridge-troll-to-8-figure-boss-all-thanks-to-one-simple-v0-lbkmy9pulu0f1.jpeg?width=640&crop=smart&auto=webp&s=d1f9e7b8b24dabf27f0ced3ff1026a35c2bb3d7b',
+  'https://cdn.dribbble.com/userupload/16450697/file/original-e6936e0048bb5f3eff760e3182576c05.png?resize=400x0',
+  'https://cdn.dribbble.com/userupload/16394212/file/original-c93733561f565d650dce4b759a417fb0.png?resize=400x0',
+  'https://s3-alpha.figma.com/hub/file/5399439708/200334e3-04ba-4ce8-a267-17357790d405-cover.png',
 ];
+
+const WHATSAPP_LINK = 'https://wa.me/923357947721';
+const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 const Hero = () => {
   return (
@@ -76,11 +77,21 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 mt-4"
           >
-            <a href="#contact" className="btn-primary flex items-center justify-center gap-2 group">
+            <a 
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-primary flex items-center justify-center gap-2 group"
+            >
               Book a Call
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#work" className="btn-secondary flex items-center justify-center gap-2">
+            <a 
+              href={GITHUB_LINK}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-secondary flex items-center justify-center gap-2"
+            >
               View Our Work
             </a>
           </motion.div>
@@ -108,7 +119,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Project Cards Marquee - Images Only with Tilts */}
+      {/* Floating Project Cards Marquee - Images Only with Tilts, Clickable */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -116,27 +127,30 @@ const Hero = () => {
         className="relative w-full overflow-hidden py-8 border-t border-white/5"
       >
         <div className="flex animate-marquee">
-          {[...projectImages, ...projectImages].map((img, index) => {
+          {[...projectImages, ...projectImages, ...projectImages].map((img, index) => {
             // Tilts: first left, second straight, third right, repeat pattern
             const tiltPattern = index % 3;
             const tiltClass = tiltPattern === 0 
-              ? '-rotate-3' 
+              ? '-rotate-2' 
               : tiltPattern === 2 
-                ? 'rotate-3' 
+                ? 'rotate-2' 
                 : 'rotate-0';
             
             return (
-              <div
+              <a
                 key={index}
-                className={`flex-shrink-0 mx-4 rounded-xl overflow-hidden pointer-events-none border border-white/5 shadow-lg ${tiltClass}`}
-                style={{ width: '200px', height: '140px' }}
+                href={GITHUB_LINK}
+                target="_blank"
+                rel="noreferrer"
+                className={`flex-shrink-0 mx-4 rounded-xl overflow-hidden border border-white/10 shadow-lg hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
+                style={{ width: '320px', height: '220px' }}
               >
                 <img 
                   src={img} 
                   alt="" 
                   className="w-full h-full object-cover bg-muted"
                 />
-              </div>
+              </a>
             );
           })}
         </div>
