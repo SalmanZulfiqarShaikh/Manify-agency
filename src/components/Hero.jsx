@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const projectImages = [
   'https://preview.redd.it/from-bridge-troll-to-8-figure-boss-all-thanks-to-one-simple-v0-lbkmy9pulu0f1.jpeg?width=640&crop=smart&auto=webp&s=d1f9e7b8b24dabf27f0ced3ff1026a35c2bb3d7b',
@@ -12,8 +14,54 @@ const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&ty
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 const Hero = () => {
+  const { theme } = useTheme();
+  const heroRef = useRef(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
+  const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      if (heroRef.current) {
+        const rect = heroRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+      }
+    };
+
+    const heroElement = heroRef.current;
+    if (heroElement) {
+      heroElement.addEventListener('mousemove', handleMouseMove);
+    }
+
+    return () => {
+      if (heroElement) {
+        heroElement.removeEventListener('mousemove', handleMouseMove);
+      }
+    };
+  }, [mouseX, mouseY]);
+
   return (
-    <section className="relative min-h-screen pt-20 md:pt-24 overflow-hidden flex flex-col">
+    <section ref={heroRef} className="relative min-h-screen pt-20 md:pt-24 overflow-hidden flex flex-col">
+      {/* Cursor Glow Effect */}
+      <motion.div
+        className="absolute pointer-events-none z-0 hidden md:block"
+        style={{
+          x: springX,
+          y: springY,
+          translateX: '-50%',
+          translateY: '-50%',
+          width: '400px',
+          height: '400px',
+          borderRadius: '50%',
+          background: theme === 'dark' 
+            ? 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)'
+            : 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(236,72,153,0.08) 30%, rgba(59,130,246,0.06) 50%, transparent 70%)',
+          filter: 'blur(20px)',
+        }}
+      />
+
       {/* Spotlight Effect */}
       <div className="absolute inset-0 spotlight pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-96 h-96 spotlight-neutral rounded-full blur-3xl pointer-events-none" />

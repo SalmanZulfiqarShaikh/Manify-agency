@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { useTheme } from '@/hooks/useTheme';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -43,6 +44,9 @@ const TestimonialCard = ({ testimonial, index }) => (
 );
 
 const Testimonials = () => {
+  const { theme } = useTheme();
+  const paginationColor = theme === 'dark' ? 'swiper-pagination-light' : 'swiper-pagination-dark';
+  
   return (
     <section className="py-20 md:py-28 bg-background">
       <div className="section-container">
@@ -69,7 +73,7 @@ const Testimonials = () => {
             slidesPerView={1.1}
             centeredSlides={true}
             pagination={{ clickable: true }}
-            className="testimonials-swiper pb-12"
+            className={`testimonials-swiper pb-12 ${paginationColor}`}
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
