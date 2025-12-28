@@ -119,22 +119,22 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Project Cards Marquee - Images Only with Tilts, Clickable */}
+      {/* Floating Project Cards Marquee - Bigger, More Tilted, Clickable */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5 }}
-        className="relative w-full overflow-hidden py-8 border-t border-white/5"
+        className="relative w-full overflow-hidden py-10 border-t border-white/5"
       >
         <div className="flex animate-marquee">
           {[...projectImages, ...projectImages, ...projectImages].map((img, index) => {
-            // Tilts: first left, second straight, third right, repeat pattern
+            // More dramatic tilts: first strong left, second slight, third strong right
             const tiltPattern = index % 3;
             const tiltClass = tiltPattern === 0 
-              ? '-rotate-2' 
+              ? '-rotate-6' 
               : tiltPattern === 2 
-                ? 'rotate-2' 
-                : 'rotate-0';
+                ? 'rotate-6' 
+                : '-rotate-1';
             
             return (
               <a
@@ -142,8 +142,8 @@ const Hero = () => {
                 href={GITHUB_LINK}
                 target="_blank"
                 rel="noreferrer"
-                className={`flex-shrink-0 mx-4 rounded-xl overflow-hidden border border-white/10 shadow-lg hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
-                style={{ width: '320px', height: '220px' }}
+                className={`flex-shrink-0 mx-6 rounded-2xl overflow-hidden border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
+                style={{ width: '420px', height: '300px' }}
               >
                 <img 
                   src={img} 

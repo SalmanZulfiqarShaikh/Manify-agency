@@ -26,13 +26,12 @@ const Navbar = () => {
       <nav className="bg-background/60 backdrop-blur-xl border-b border-white/5">
         <div className="section-container">
           <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo - Elegant "M" */}
+            {/* Logo - Code Symbol </> */}
             <a href="#" className="flex items-center">
               <span 
-                className="text-4xl md:text-5xl font-serif font-bold text-foreground tracking-tight"
-                style={{ fontFamily: 'Georgia, Times New Roman, serif' }}
+                className="text-2xl md:text-3xl font-mono font-semibold text-foreground tracking-tight"
               >
-                M
+                &lt;/&gt;
               </span>
             </a>
 

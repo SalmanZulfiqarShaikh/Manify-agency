@@ -59,6 +59,10 @@ const imageCredits = [
     description: 'Canva Logo (1000logos)',
     url: 'https://1000logos.net/wp-content/uploads/2023/02/Canva-logo.png',
   },
+  {
+    description: 'Fiverr Logo (Logos World)',
+    url: 'https://logos-world.net/wp-content/uploads/2020/12/Fiverr-Logo.png',
+  },
 ];
 
 const Legal = () => {
