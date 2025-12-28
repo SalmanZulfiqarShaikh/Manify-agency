@@ -6,7 +6,7 @@ import { ArrowRight, Sparkles, ExternalLink } from 'lucide-react';
 const platforms = [
   {
     name: 'Hire on Upwork',
-    description: 'Top-rated freelancer with 100% job success',
+    description: 'Top-rated team with 100% job success',
     link: '#',
     badge: 'Top Rated',
   },
@@ -18,7 +18,7 @@ const platforms = [
   },
   {
     name: 'Direct Hire',
-    description: 'Work with me directly for the best rates',
+    description: 'Work with us directly for the best rates',
     link: '#contact',
     badge: 'Recommended',
   },
@@ -52,17 +52,17 @@ const ContactStrip = () => {
               initial={{ scale: 0 }}
               animate={isInView ? { scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-teal"
+              className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center glow-bronze"
             >
               <Sparkles size={36} className="text-primary-foreground" />
             </motion.div>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-              Already have a <span className="text-gradient-violet">design</span>?
+              Already have a <span className="text-gradient-copper">design</span>?
             </h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto mb-8">
-              Let&apos;s turn it into a live website — clean, fast, and conversion-ready. 
-              I&apos;ll bring your vision to life with pixel-perfect precision.
+              Let us turn it into a live website — clean, fast, and conversion-ready. 
+              Our team will bring your vision to life with pixel-perfect precision.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -71,7 +71,7 @@ const ContactStrip = () => {
                 <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
               </a>
               <a href="#work" className="btn-secondary flex items-center justify-center gap-2">
-                View My Work
+                View Our Work
               </a>
             </div>
           </div>
@@ -84,7 +84,7 @@ const ContactStrip = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           <h3 className="text-xl font-semibold text-center mb-8">
-            Or hire me through these platforms
+            Or hire us through these platforms
           </h3>
 
           <div className="grid md:grid-cols-3 gap-6 overflow-x-auto pb-4 md:pb-0 snap-x snap-mandatory md:snap-none -mx-4 px-4 md:mx-0 md:px-0">

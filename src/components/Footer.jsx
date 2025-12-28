@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Github, Instagram, Heart, Clock } from 'lucide-react';
+import { Linkedin, Github, Instagram, Clock, Heart } from 'lucide-react';
 
 const socialLinks = [
   {
@@ -22,6 +22,24 @@ const socialLinks = [
     label: 'Visit Instagram profile',
   },
 ];
+
+// Pakistan Flag SVG Component
+const PakistanFlag = () => (
+  <svg
+    viewBox="0 0 900 600"
+    className="w-5 h-4 inline-block"
+    aria-label="Pakistan flag"
+  >
+    <rect fill="#01411C" width="900" height="600" />
+    <rect fill="#FFFFFF" width="225" height="600" />
+    <circle fill="#FFFFFF" cx="583" cy="300" r="150" />
+    <circle fill="#01411C" cx="610" cy="300" r="120" />
+    <polygon
+      fill="#FFFFFF"
+      points="663,105 693,195 788,195 713,255 738,345 663,285 588,345 613,255 538,195 633,195"
+    />
+  </svg>
+);
 
 const Footer = () => {
   const [localTime, setLocalTime] = useState('');
@@ -52,7 +70,7 @@ const Footer = () => {
             className="text-center md:text-left"
           >
             <p className="text-muted-foreground text-sm">
-              From <span className="text-foreground font-medium">Pakistan</span> with passion
+              From <span className="text-foreground font-medium">Karachi</span> with passion
             </p>
           </motion.div>
 
@@ -77,13 +95,11 @@ const Footer = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="flex flex-col sm:flex-row items-center gap-4"
           >
-            {/* Credits */}
-            <p className="text-sm text-muted-foreground flex items-center gap-1">
-              Made with <Heart size={14} className="text-red-500 fill-red-500" /> by{' '}
-              <span className="text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded glow-teal">
-                Salman Zulfiqar
-              </span>{' '}
-              Shaikh
+            {/* Credits with heart outline and Pakistan flag */}
+            <p className="text-sm text-muted-foreground flex items-center gap-1.5 flex-wrap justify-center">
+              Made with{' '}
+              <Heart size={14} className="text-primary" strokeWidth={2} />{' '}
+              in <PakistanFlag /> Pakistan
             </p>
 
             {/* Social Icons */}
@@ -115,7 +131,7 @@ const Footer = () => {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground"
         >
-          <p>© {new Date().getFullYear()} Salman Zulfiqar Shaikh. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Manify. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
@@ -126,7 +142,7 @@ const Footer = () => {
       {/* Large Background Text */}
       <div className="absolute bottom-0 left-0 right-0 overflow-hidden pointer-events-none select-none">
         <div className="text-[12vw] font-bold text-white/[0.015] whitespace-nowrap tracking-tighter">
-          SALMAN ZULFIQAR
+          MANIFY STUDIO
         </div>
       </div>
     </footer>

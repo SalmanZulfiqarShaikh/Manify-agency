@@ -26,10 +26,10 @@ const Navbar = () => {
             {/* Logo */}
             <a href="#" className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-sm">SZ</span>
+                <span className="text-primary-foreground font-bold text-sm">M</span>
               </div>
               <span className="text-foreground font-semibold text-lg hidden sm:block">
-                Salman<span className="text-primary">.</span>
+                Manify<span className="text-primary">.</span>
               </span>
             </a>
 

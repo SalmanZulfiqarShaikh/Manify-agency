@@ -12,23 +12,23 @@ const projects = [
     accent: 'primary',
   },
   {
-    title: 'SaaS Dashboard',
-    category: 'UI/UX Design',
-    description: 'Intuitive analytics dashboard for data-driven decisions.',
+    title: 'AI Workflow System',
+    category: 'Automation',
+    description: 'Intelligent automation that streamlines business operations.',
     gradient: 'from-secondary/30 via-secondary/10 to-transparent',
     accent: 'secondary',
   },
   {
     title: 'Mobile Banking App',
-    category: 'Product Design',
+    category: 'App Development',
     description: 'Secure and user-friendly banking experience on mobile.',
     gradient: 'from-accent/30 via-accent/10 to-transparent',
     accent: 'accent',
   },
   {
-    title: 'Real Estate Platform',
-    category: 'Full Stack',
-    description: 'Property listing platform with advanced search features.',
+    title: 'SEO Dashboard',
+    category: 'SEO Optimization',
+    description: 'Analytics platform with advanced SEO tracking features.',
     gradient: 'from-primary/30 via-secondary/10 to-transparent',
     accent: 'primary',
   },
@@ -41,22 +41,20 @@ const Work = () => {
   return (
     <section id="work" className="relative py-24 md:py-32 overflow-hidden bg-deep-alt/30">
       <div className="section-container relative z-10">
-        {/* Section Header */}
+        {/* Section Header - Centered */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12"
+          className="text-center mb-12"
         >
-          <div>
-            <span className="label-badge mb-4">Selected Work</span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4">
-              Recent <span className="text-gradient-teal">projects</span>
-            </h2>
-          </div>
+          <span className="label-badge mb-4">Selected Work</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
+            Recent <span className="text-gradient-bronze">projects</span>
+          </h2>
           <a 
             href="#contact" 
-            className="btn-secondary inline-flex items-center gap-2 w-fit"
+            className="btn-secondary inline-flex items-center gap-2"
           >
             View All Work
             <ArrowUpRight size={18} />

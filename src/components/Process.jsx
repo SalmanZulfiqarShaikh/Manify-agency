@@ -52,7 +52,7 @@ const Process = () => {
         >
           <span className="label-badge mb-4">Process</span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mt-4 mb-6">
-            You&apos;re <span className="text-gradient-violet">5 steps</span> away
+            You&apos;re <span className="text-gradient-copper">5 steps</span> away
             <br className="hidden sm:block" />
             from a new website
           </h2>
