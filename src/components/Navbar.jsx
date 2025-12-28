@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme.jsx';
 
 const navLinks = [
   { name: 'Work', href: '#work' },
@@ -10,11 +11,12 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 
-const WHATSAPP_LINK = 'https://wa.me/923357947721';
+const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <motion.header
@@ -48,8 +50,15 @@ const Navbar = () => {
               ))}
             </div>
 
-            {/* CTA Button */}
+            {/* Theme Toggle & CTA Button */}
             <div className="hidden md:flex items-center gap-4">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-muted hover:bg-muted/80 text-foreground transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
               <a 
                 href={WHATSAPP_LINK}
                 target="_blank"
@@ -60,14 +69,23 @@ const Navbar = () => {
               </a>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-foreground hover:text-primary transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            {/* Mobile Theme Toggle & Menu Button */}
+            <div className="flex md:hidden items-center gap-2">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg bg-muted hover:bg-muted/80 text-foreground transition-colors"
+                aria-label="Toggle theme"
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 text-foreground hover:text-primary transition-colors"
+                aria-label="Toggle menu"
+              >
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
+              </button>
+            </div>
           </div>
         </div>
 

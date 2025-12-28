@@ -99,7 +99,7 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-muted/50 border ${errors.name ? 'border-destructive' : 'border-white/10'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-white/30 transition-colors`}
+                className={`w-full px-4 py-3 bg-muted/50 border ${errors.name ? 'border-destructive' : 'border-border'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors`}
                 placeholder="Your name"
               />
               {errors.name && (
@@ -121,7 +121,7 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 bg-muted/50 border ${errors.email ? 'border-destructive' : 'border-white/10'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-white/30 transition-colors`}
+                className={`w-full px-4 py-3 bg-muted/50 border ${errors.email ? 'border-destructive' : 'border-border'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors`}
                 placeholder="your@email.com"
               />
               {errors.email && (
@@ -143,7 +143,7 @@ const Contact = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={5}
-                className={`w-full px-4 py-3 bg-muted/50 border ${errors.message ? 'border-destructive' : 'border-white/10'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-white/30 transition-colors resize-none`}
+                className={`w-full px-4 py-3 bg-muted/50 border ${errors.message ? 'border-destructive' : 'border-border'} rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary/50 transition-colors resize-none`}
                 placeholder="Tell us about your project..."
               />
               {errors.message && (
@@ -180,7 +180,7 @@ const Contact = () => {
             initial={{ opacity: 0, y: 50, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
             exit={{ opacity: 0, y: 50, x: '-50%' }}
-            className="fixed bottom-8 left-1/2 z-50 bg-background border border-white/20 rounded-xl px-6 py-4 shadow-2xl flex items-center gap-3"
+            className="fixed bottom-8 left-1/2 z-50 bg-background border border-border rounded-xl px-6 py-4 shadow-2xl flex items-center gap-3"
           >
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
               <CheckCircle size={18} className="text-foreground" />
