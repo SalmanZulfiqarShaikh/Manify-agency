@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useRef, memo, useMemo, useEffect, useState } from 'react';
 import { ArrowRight, Sparkles, ExternalLink, Handshake } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme.jsx';
 
@@ -8,17 +7,20 @@ const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&ty
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
 // SVG Icons for platforms
-const UpworkIcon = () => (
+const UpworkIcon = memo(() => (
   <svg viewBox="0 0 24 24" className="w-8 h-8" fill="currentColor">
     <path d="M18.561 13.158c-1.102 0-2.135-.467-3.074-1.227l.228-1.076.008-.042c.207-1.143.849-3.06 2.839-3.06 1.492 0 2.703 1.212 2.703 2.703-.001 1.489-1.212 2.702-2.704 2.702zm0-8.14c-2.539 0-4.51 1.649-5.31 4.366-1.22-1.834-2.148-4.036-2.687-5.892H7.828v7.112c-.002 1.406-1.141 2.546-2.547 2.548-1.405-.002-2.543-1.143-2.545-2.548V3.492H0v7.112c0 2.914 2.37 5.303 5.281 5.303 2.913 0 5.283-2.389 5.283-5.303v-1.19c.529 1.107 1.182 2.229 1.974 3.221l-1.673 7.873h2.797l1.213-5.71c1.063.679 2.285 1.109 3.686 1.109 3 0 5.439-2.452 5.439-5.45 0-3-2.439-5.439-5.439-5.439z"/>
   </svg>
-);
+));
 
-const FiverrIcon = ({ theme }) => (
+UpworkIcon.displayName = 'UpworkIcon';
+
+const FiverrIcon = memo(({ theme }) => (
   <div className="w-16 h-10 flex items-center justify-center">
     <img 
       src="https://logos-world.net/wp-content/uploads/2020/12/Fiverr-Logo.png" 
       alt="Fiverr" 
+      loading="lazy"
       className="w-full h-full object-contain"
       style={{ filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'grayscale(100%)' }}
       onError={(e) => {
@@ -27,15 +29,34 @@ const FiverrIcon = ({ theme }) => (
       }}
     />
   </div>
-);
+));
 
+FiverrIcon.displayName = 'FiverrIcon';
+
+// Scroll to contact helper
+const scrollToContact = (e) => {
+  e.preventDefault();
+  const el = document.getElementById('contact-form');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const ContactStrip = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const { theme } = useTheme();
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
   
-  const platforms = [
+  const platforms = useMemo(() => [
     {
       name: 'Hire on Upwork',
       description: 'Top-rated team with 100% job success',
@@ -57,7 +78,11 @@ const ContactStrip = () => {
       badge: 'Recommended',
       icon: () => <Handshake className="w-8 h-8" />,
     },
-  ];
+  ], [theme]);
+
+  const animationProps = prefersReducedMotion 
+    ? { initial: { opacity: 1 }, animate: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 40 }, animate: isInView ? { opacity: 1, y: 0 } : {} };
 
   return (
     <section className="relative py-24 md:py-32 overflow-hidden bg-deep-alt/30">
@@ -67,20 +92,19 @@ const ContactStrip = () => {
       <div className="section-container relative z-10">
         {/* CTA Card */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          {...animationProps}
           transition={{ duration: 0.6 }}
           ref={ref}
           className="relative glass-card rounded-3xl p-8 md:p-12 text-center mb-16 overflow-hidden"
         >
-          {/* Glow Effect */}
+          {/* Glow Effect - simplified for mobile */}
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
-          <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-secondary/20 rounded-full blur-3xl" />
+          <div className="absolute -top-20 -right-20 w-40 h-40 bg-primary/20 rounded-full blur-3xl hidden md:block" />
+          <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-secondary/20 rounded-full blur-3xl hidden md:block" />
           
           <div className="relative z-10">
             <motion.div
-              initial={{ scale: 0 }}
+              initial={prefersReducedMotion ? { scale: 1 } : { scale: 0 }}
               animate={isInView ? { scale: 1 } : {}}
               transition={{ duration: 0.5, delay: 0.2 }}
               className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-white/20 to-white/5 flex items-center justify-center glow-neutral"
@@ -97,6 +121,7 @@ const ContactStrip = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {/* This "Book a Call" goes to WhatsApp */}
               <a 
                 href={WHATSAPP_LINK}
                 target="_blank"
@@ -120,7 +145,7 @@ const ContactStrip = () => {
 
         {/* Platforms Strip */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
@@ -137,10 +162,11 @@ const ContactStrip = () => {
                   href={platform.link}
                   target={platform.link.startsWith('http') ? '_blank' : undefined}
                   rel={platform.link.startsWith('http') ? 'noreferrer' : undefined}
-                  initial={{ opacity: 0, x: 30 }}
+                  initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, x: 30 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
+                  transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : 0.4 + index * 0.1 }}
                   className="glass-card glass-card-hover rounded-xl p-6 snap-center min-w-[280px] md:min-w-0 flex flex-col group"
+                  style={{ willChange: 'transform' }}
                 >
                   <div className="flex items-center justify-between mb-4">
                     <span className="text-xs font-medium px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
@@ -167,4 +193,4 @@ const ContactStrip = () => {
   );
 };
 
-export default ContactStrip;
+export default memo(ContactStrip);
