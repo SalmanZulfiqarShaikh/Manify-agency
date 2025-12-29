@@ -213,11 +213,11 @@ const Hero = () => {
             className="flex flex-wrap justify-center gap-8 mt-8 pt-8 border-t border-white/5"
           >
             <div className="text-center">
-              <div className="text-3xl font-bold text-foreground">50+</div>
+              <div className="text-3xl font-bold text-foreground">500+</div>
               <div className="text-sm text-muted-foreground">Projects Delivered</div>
             </div>
             <div className="text-center">
-              <div className="text-3xl font-bold text-foreground">3+</div>
+              <div className="text-3xl font-bold text-foreground">10+</div>
               <div className="text-sm text-muted-foreground">Years Experience</div>
             </div>
             <div className="text-center">
@@ -228,11 +228,11 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Project Cards Marquee - Unclickable, Faster */}
+      {/* Floating Project Cards  - Unclickable, Faster */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
+        transition={{ duration: 0.4, delay: 0.3 }}
         className="relative w-full overflow-hidden py-10 border-t border-white/5"
       >
         <div 
