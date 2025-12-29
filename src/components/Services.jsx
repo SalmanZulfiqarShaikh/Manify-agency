@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useRef, memo, useState, useEffect, useMemo, useCallback } from 'react';
 import { Code, Zap, Search, Bot, Smartphone, Workflow } from 'lucide-react';
 
 const services = [
@@ -42,44 +41,67 @@ const services = [
   },
 ];
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
+const getColorClasses = (color) => {
+  switch (color) {
+    case 'primary':
+      return 'text-primary group-hover:bg-primary/10 border-primary/20';
+    case 'secondary':
+      return 'text-secondary group-hover:bg-secondary/10 border-secondary/20';
+    case 'accent':
+      return 'text-accent group-hover:bg-accent/10 border-accent/20';
+    default:
+      return 'text-primary group-hover:bg-primary/10 border-primary/20';
+  }
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5,
-      ease: 'easeOut',
-    },
-  },
-};
+const ServiceCard = memo(({ service, prefersReducedMotion }) => {
+  const Icon = service.icon;
+  const colorClasses = getColorClasses(service.color);
+  
+  return (
+    <motion.div
+      variants={prefersReducedMotion ? {} : {
+        hidden: { opacity: 0, y: 30 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
+      }}
+      className="group glass-card glass-card-hover rounded-2xl p-6 md:p-8"
+      style={{ willChange: 'transform' }}
+    >
+      <div className={`w-14 h-14 rounded-xl border ${colorClasses} flex items-center justify-center mb-6 transition-colors duration-300`}>
+        <Icon size={24} />
+      </div>
+      <h3 className="text-xl font-semibold text-foreground mb-3">
+        {service.title}
+      </h3>
+      <p className="text-muted-foreground leading-relaxed">
+        {service.description}
+      </p>
+    </motion.div>
+  );
+});
+
+ServiceCard.displayName = 'ServiceCard';
 
 const Services = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  const getColorClasses = (color) => {
-    switch (color) {
-      case 'primary':
-        return 'text-primary group-hover:bg-primary/10 border-primary/20';
-      case 'secondary':
-        return 'text-secondary group-hover:bg-secondary/10 border-secondary/20';
-      case 'accent':
-        return 'text-accent group-hover:bg-accent/10 border-accent/20';
-      default:
-        return 'text-primary group-hover:bg-primary/10 border-primary/20';
-    }
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  const containerVariants = useMemo(() => prefersReducedMotion ? {} : {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
+  }, [prefersReducedMotion]);
 
   return (
     <section id="services" className="relative py-24 md:py-32 overflow-hidden">
@@ -89,7 +111,7 @@ const Services = () => {
       <div className="section-container relative z-10">
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
@@ -115,32 +137,17 @@ const Services = () => {
           animate={isInView ? 'visible' : 'hidden'}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {services.map((service) => {
-            const Icon = service.icon;
-            const colorClasses = getColorClasses(service.color);
-            
-            return (
-              <motion.div
-                key={service.title}
-                variants={itemVariants}
-                className="group glass-card glass-card-hover rounded-2xl p-6 md:p-8"
-              >
-                <div className={`w-14 h-14 rounded-xl border ${colorClasses} flex items-center justify-center mb-6 transition-colors duration-300`}>
-                  <Icon size={24} />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {service.description}
-                </p>
-              </motion.div>
-            );
-          })}
+          {services.map((service) => (
+            <ServiceCard 
+              key={service.title} 
+              service={service} 
+              prefersReducedMotion={prefersReducedMotion}
+            />
+          ))}
         </motion.div>
       </div>
     </section>
   );
 };
 
-export default Services;
+export default memo(Services);

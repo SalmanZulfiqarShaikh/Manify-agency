@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, memo, useMemo } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
@@ -10,8 +10,33 @@ const projectImages = [
   'https://s3-alpha.figma.com/hub/file/5399439708/200334e3-04ba-4ce8-a267-17357790d405-cover.png',
 ];
 
-const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
+
+// Memoized project card - no links, no pointer
+const ProjectCard = memo(({ img, tiltClass }) => (
+  <div
+    className={`flex-shrink-0 mx-4 rounded-2xl overflow-hidden border border-white/10 shadow-2xl select-none ${tiltClass}`}
+    style={{ width: '320px', height: '220px', willChange: 'transform' }}
+  >
+    <img 
+      src={img} 
+      alt="" 
+      loading="lazy"
+      className="w-full h-full object-cover bg-muted pointer-events-none"
+    />
+  </div>
+));
+
+ProjectCard.displayName = 'ProjectCard';
+
+// Scroll to contact helper
+const scrollToContact = (e) => {
+  e.preventDefault();
+  const el = document.getElementById('contact-form');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const Hero = () => {
   const { theme } = useTheme();
@@ -20,75 +45,112 @@ const Hero = () => {
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
   const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Check for reduced motion preference
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  const handleMouseMove = useCallback((e) => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      mouseX.set(e.clientX - rect.left);
+      mouseY.set(e.clientY - rect.top);
+    }
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (heroRef.current) {
-        const rect = heroRef.current.getBoundingClientRect();
-        mouseX.set(e.clientX - rect.left);
-        mouseY.set(e.clientY - rect.top);
-      }
-    };
-
     const heroElement = heroRef.current;
-    if (heroElement) {
-      heroElement.addEventListener('mousemove', handleMouseMove);
+    if (heroElement && !prefersReducedMotion) {
+      heroElement.addEventListener('mousemove', handleMouseMove, { passive: true });
     }
-
     return () => {
       if (heroElement) {
         heroElement.removeEventListener('mousemove', handleMouseMove);
       }
     };
-  }, [mouseX, mouseY]);
+  }, [handleMouseMove, prefersReducedMotion]);
+
+  // Memoize project cards array
+  const projectCards = useMemo(() => {
+    const images = [...projectImages, ...projectImages, ...projectImages];
+    return images.map((img, index) => {
+      const tiltPattern = index % 3;
+      const tiltClass = tiltPattern === 0 
+        ? '-rotate-6' 
+        : tiltPattern === 2 
+          ? 'rotate-6' 
+          : '-rotate-1';
+      return <ProjectCard key={index} img={img} tiltClass={tiltClass} />;
+    });
+  }, []);
+
+  // Animation variants for reduced motion
+  const fadeVariant = prefersReducedMotion 
+    ? { initial: { opacity: 1 }, animate: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 } };
 
   return (
     <section ref={heroRef} className="relative min-h-screen pt-20 md:pt-24 overflow-hidden flex flex-col">
-      {/* Cursor Glow Effect */}
-      <motion.div
-        className="absolute pointer-events-none z-0 hidden md:block"
-        style={{
-          x: springX,
-          y: springY,
-          translateX: '-50%',
-          translateY: '-50%',
-          width: '400px',
-          height: '400px',
-          borderRadius: '50%',
-          background: theme === 'dark' 
-            ? 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)'
-            : 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(236,72,153,0.08) 30%, rgba(59,130,246,0.06) 50%, transparent 70%)',
-          filter: 'blur(20px)',
-        }}
-      />
+      {/* Cursor Glow Effect - Desktop only, skip if reduced motion */}
+      {!prefersReducedMotion && (
+        <motion.div
+          className="absolute pointer-events-none z-0 hidden md:block"
+          style={{
+            x: springX,
+            y: springY,
+            translateX: '-50%',
+            translateY: '-50%',
+            width: '400px',
+            height: '400px',
+            borderRadius: '50%',
+            background: theme === 'dark' 
+              ? 'radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 40%, transparent 70%)'
+              : 'radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(236,72,153,0.08) 30%, rgba(59,130,246,0.06) 50%, transparent 70%)',
+            willChange: 'transform',
+          }}
+        />
+      )}
 
       {/* Spotlight Effect */}
       <div className="absolute inset-0 spotlight pointer-events-none" />
       <div className="absolute top-1/4 right-1/4 w-96 h-96 spotlight-neutral rounded-full blur-3xl pointer-events-none" />
       
-      {/* Floating Orbs */}
-      <motion.div
-        className="absolute top-32 left-10 w-2 h-2 rounded-full bg-white/20 blur-sm"
-        animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity }}
-      />
-      <motion.div
-        className="absolute top-64 right-20 w-3 h-3 rounded-full bg-white/15 blur-sm"
-        animate={{ y: [0, 20, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 5, repeat: Infinity, delay: 1 }}
-      />
-      <motion.div
-        className="absolute bottom-40 left-1/4 w-2 h-2 rounded-full bg-white/10 blur-sm"
-        animate={{ y: [0, -15, 0], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
-      />
+      {/* Floating Orbs - skip on mobile and reduced motion */}
+      {!prefersReducedMotion && (
+        <>
+          <motion.div
+            className="absolute top-32 left-10 w-2 h-2 rounded-full bg-white/20 blur-sm hidden md:block"
+            animate={{ y: [0, -20, 0], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            style={{ willChange: 'transform, opacity' }}
+          />
+          <motion.div
+            className="absolute top-64 right-20 w-3 h-3 rounded-full bg-white/15 blur-sm hidden md:block"
+            animate={{ y: [0, 20, 0], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 5, repeat: Infinity, delay: 1 }}
+            style={{ willChange: 'transform, opacity' }}
+          />
+          <motion.div
+            className="absolute bottom-40 left-1/4 w-2 h-2 rounded-full bg-white/10 blur-sm hidden md:block"
+            animate={{ y: [0, -15, 0], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 3.5, repeat: Infinity, delay: 0.5 }}
+            style={{ willChange: 'transform, opacity' }}
+          />
+        </>
+      )}
 
       <div className="section-container relative z-10 flex-1 flex flex-col justify-center">
         {/* Centered Hero Content */}
         <div className="flex flex-col items-center text-center gap-6 py-12 lg:py-16">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={fadeVariant.initial}
+            animate={fadeVariant.animate}
             transition={{ duration: 0.5 }}
             className="label-badge"
           >
@@ -97,9 +159,9 @@ const Hero = () => {
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: prefersReducedMotion ? 0 : 0.1 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight max-w-4xl"
           >
             We build{' '}
@@ -110,9 +172,9 @@ const Hero = () => {
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: prefersReducedMotion ? 0 : 0.2 }}
             className="text-muted-foreground text-lg md:text-xl max-w-2xl"
           >
             Our studio crafts stunning websites, automates workflows, and integrates AI solutions 
@@ -120,15 +182,14 @@ const Hero = () => {
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: prefersReducedMotion ? 0 : 0.3 }}
             className="flex flex-col sm:flex-row gap-4 mt-4"
           >
             <a 
-              href={WHATSAPP_LINK}
-              target="_blank"
-              rel="noreferrer"
+              href="#contact-form"
+              onClick={scrollToContact}
               className="btn-primary flex items-center justify-center gap-2 group"
             >
               Book a Call
@@ -146,9 +207,9 @@ const Hero = () => {
 
           {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: prefersReducedMotion ? 0 : 0.4 }}
             className="flex flex-wrap justify-center gap-8 mt-8 pt-8 border-t border-white/5"
           >
             <div className="text-center">
@@ -167,44 +228,22 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Floating Project Cards Marquee - Bigger, More Tilted, Clickable */}
+      {/* Floating Project Cards Marquee - Unclickable, Faster */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.5 }}
         className="relative w-full overflow-hidden py-10 border-t border-white/5"
       >
-        <div className="flex animate-marquee">
-          {[...projectImages, ...projectImages, ...projectImages].map((img, index) => {
-            // More dramatic tilts: first strong left, second slight, third strong right
-            const tiltPattern = index % 3;
-            const tiltClass = tiltPattern === 0 
-              ? '-rotate-6' 
-              : tiltPattern === 2 
-                ? 'rotate-6' 
-                : '-rotate-1';
-            
-            return (
-              <a
-                key={index}
-                href={GITHUB_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className={`flex-shrink-0 mx-4 rounded-2xl overflow-hidden border border-white/10 shadow-2xl hover:border-white/20 transition-all duration-300 hover:scale-105 ${tiltClass}`}
-                style={{ width: '320px', height: '220px' }}
-              >
-                <img 
-                  src={img} 
-                  alt="" 
-                  className="w-full h-full object-cover bg-muted"
-                />
-              </a>
-            );
-          })}
+        <div 
+          className={`flex ${prefersReducedMotion ? '' : 'animate-marquee-fast'}`}
+          style={{ willChange: 'transform' }}
+        >
+          {projectCards}
         </div>
       </motion.div>
     </section>
   );
 };
 
-export default Hero;
+export default memo(Hero);

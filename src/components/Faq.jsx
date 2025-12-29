@@ -1,8 +1,6 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, memo, useEffect, useCallback } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-
-const WHATSAPP_LINK = 'https://wa.me/923357947721';
 
 const faqs = [
   {
@@ -27,12 +25,21 @@ const faqs = [
   },
 ];
 
-const FaqItem = ({ faq, isOpen, onClick, index }) => {
+// Scroll to contact helper
+const scrollToContact = (e) => {
+  e.preventDefault();
+  const el = document.getElementById('contact-form');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
+const FaqItem = memo(({ faq, isOpen, onClick, index, prefersReducedMotion }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay: index * 0.1 }}
+      transition={{ duration: 0.4, delay: prefersReducedMotion ? 0 : index * 0.1 }}
       className="glass-card rounded-xl overflow-hidden"
     >
       <button
@@ -67,19 +74,34 @@ const FaqItem = ({ faq, isOpen, onClick, index }) => {
       </AnimatePresence>
     </motion.div>
   );
-};
+});
+
+FaqItem.displayName = 'FaqItem';
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  const handleItemClick = useCallback((index) => {
+    setOpenIndex(prev => prev === index ? null : index);
+  }, []);
 
   return (
     <section id="faq" className="relative py-24 md:py-32 overflow-hidden">
       <div className="section-container relative z-10">
         {/* Section Header - Centered */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
@@ -93,9 +115,8 @@ const Faq = () => {
             Can&apos;t find what you&apos;re looking for? Feel free to reach out directly.
           </p>
           <a 
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noreferrer"
+            href="#contact-form"
+            onClick={scrollToContact}
             className="btn-primary inline-flex items-center gap-2"
           >
             Contact Us
@@ -109,8 +130,9 @@ const Faq = () => {
               key={index}
               faq={faq}
               isOpen={openIndex === index}
-              onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              onClick={() => handleItemClick(index)}
               index={index}
+              prefersReducedMotion={prefersReducedMotion}
             />
           ))}
         </div>
@@ -119,4 +141,4 @@ const Faq = () => {
   );
 };
 
-export default Faq;
+export default memo(Faq);

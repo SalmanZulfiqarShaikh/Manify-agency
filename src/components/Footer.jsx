@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Linkedin, Github, Instagram, Clock, Heart, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -31,7 +31,7 @@ const socialLinks = [
 ];
 
 // Pakistan Flag SVG Component
-const PakistanFlag = () => (
+const PakistanFlag = memo(() => (
   <svg
     viewBox="0 0 900 600"
     className="w-5 h-4 inline-block border border-white/10 rounded-sm"
@@ -46,10 +46,38 @@ const PakistanFlag = () => (
       points="663,105 693,195 788,195 713,255 738,345 663,285 588,345 613,255 538,195 633,195"
     />
   </svg>
-);
+));
+
+PakistanFlag.displayName = 'PakistanFlag';
+
+const SocialLink = memo(({ social }) => {
+  const Icon = social.icon;
+  return (
+    <a
+      href={social.url}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={social.label}
+      className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-white/20 hover:bg-white/10 transition-all duration-300"
+    >
+      <Icon size={18} />
+    </a>
+  );
+});
+
+SocialLink.displayName = 'SocialLink';
 
 const Footer = () => {
   const [localTime, setLocalTime] = useState('');
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     const updateTime = () => {
@@ -63,6 +91,10 @@ const Footer = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const animationProps = prefersReducedMotion 
+    ? { initial: { opacity: 1 }, whileInView: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 } };
+
   return (
     <footer className="relative py-12 md:py-16 border-t border-white/5 bg-background">
       <div className="section-container">
@@ -70,8 +102,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
           {/* Left - Local Time */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            {...animationProps}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
@@ -83,10 +114,9 @@ const Footer = () => {
 
           {/* Center - Credits with Pakistan flag */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            {...animationProps}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : 0.1 }}
             className="flex flex-col items-center gap-1 text-center"
           >
             <p className="text-sm text-muted-foreground flex items-center gap-1.5">
@@ -101,36 +131,23 @@ const Footer = () => {
 
           {/* Right - Social Icons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            {...animationProps}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : 0.2 }}
             className="flex items-center gap-3"
           >
-            {socialLinks.map((social) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={social.label}
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-white/20 hover:bg-white/10 transition-all duration-300"
-                >
-                  <Icon size={18} />
-                </a>
-              );
-            })}
+            {socialLinks.map((social) => (
+              <SocialLink key={social.name} social={social} />
+            ))}
           </motion.div>
         </div>
 
         {/* Read This Link */}
         <motion.div
-          initial={{ opacity: 0 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : 0.3 }}
           className="text-center mt-8 pt-6 border-t border-white/5"
         >
           <Link 
@@ -152,4 +169,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default memo(Footer);

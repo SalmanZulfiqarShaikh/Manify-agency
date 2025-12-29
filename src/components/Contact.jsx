@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle, AlertCircle, X } from 'lucide-react';
 
@@ -11,8 +11,17 @@ const Contact = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
-  const validateForm = () => {
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  const validateForm = useCallback(() => {
     const newErrors = {};
     
     if (!formData.name.trim()) {
@@ -31,17 +40,22 @@ const Contact = () => {
     
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  };
+  }, [formData]);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
+    setErrors(prev => {
+      if (prev[name]) {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      }
+      return prev;
+    });
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     
     if (!validateForm()) return;
@@ -60,14 +74,19 @@ const Contact = () => {
     
     // Hide toast after 5 seconds
     setTimeout(() => setShowToast(false), 5000);
-  };
+  }, [formData, validateForm]);
+
+  const closeToast = useCallback(() => setShowToast(false), []);
+
+  const animationProps = prefersReducedMotion 
+    ? { initial: { opacity: 1 }, whileInView: { opacity: 1 } }
+    : { initial: { opacity: 0, y: 20 }, whileInView: { opacity: 1, y: 0 } };
 
   return (
     <section id="contact-form" className="py-20 md:py-28 bg-deep-alt/30">
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          {...animationProps}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
@@ -81,10 +100,10 @@ const Contact = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : 0.1 }}
           className="max-w-xl mx-auto"
         >
           <form onSubmit={handleSubmit} className="glass-card rounded-2xl p-6 md:p-8 space-y-6">
@@ -177,9 +196,9 @@ const Contact = () => {
       <AnimatePresence>
         {showToast && (
           <motion.div
-            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            initial={prefersReducedMotion ? { opacity: 1, x: '-50%' } : { opacity: 0, y: 50, x: '-50%' }}
             animate={{ opacity: 1, y: 0, x: '-50%' }}
-            exit={{ opacity: 0, y: 50, x: '-50%' }}
+            exit={prefersReducedMotion ? { opacity: 0, x: '-50%' } : { opacity: 0, y: 50, x: '-50%' }}
             className="fixed bottom-8 left-1/2 z-50 bg-background border border-border rounded-xl px-6 py-4 shadow-2xl flex items-center gap-3"
           >
             <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
@@ -187,7 +206,7 @@ const Contact = () => {
             </div>
             <p className="text-foreground font-medium">Email sent</p>
             <button 
-              onClick={() => setShowToast(false)}
+              onClick={closeToast}
               className="ml-4 text-muted-foreground hover:text-foreground transition-colors"
             >
               <X size={18} />
@@ -199,4 +218,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default memo(Contact);

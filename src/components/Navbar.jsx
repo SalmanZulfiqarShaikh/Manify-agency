@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme.jsx';
@@ -11,12 +11,22 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 
-const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
-const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
+// Scroll to contact helper
+const scrollToContact = (e) => {
+  e.preventDefault();
+  const el = document.getElementById('contact-form');
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, toggleTheme } = useTheme();
+
+  const handleLinkClick = useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   return (
     <motion.header
@@ -60,9 +70,8 @@ const Navbar = () => {
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
               </button>
               <a 
-                href={WHATSAPP_LINK}
-                target="_blank"
-                rel="noreferrer"
+                href="#contact-form"
+                onClick={scrollToContact}
                 className="btn-primary text-sm"
               >
                 Book a Call
@@ -107,20 +116,21 @@ const Navbar = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={handleLinkClick}
                     className="text-foreground hover:text-primary transition-colors py-2 font-medium"
                   >
                     {link.name}
                   </motion.a>
                 ))}
                 <motion.a
-                  href={WHATSAPP_LINK}
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#contact-form"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.5 }}
-                  onClick={() => setIsOpen(false)}
+                  onClick={(e) => {
+                    scrollToContact(e);
+                    handleLinkClick();
+                  }}
                   className="btn-primary text-center mt-2"
                 >
                   Book a Call
@@ -134,4 +144,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

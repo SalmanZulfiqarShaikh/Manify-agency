@@ -3,6 +3,7 @@ import { Quote } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import { useTheme } from '@/hooks/useTheme';
+import { memo, useState, useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -24,12 +25,12 @@ const testimonials = [
   }
 ];
 
-const TestimonialCard = ({ testimonial, index }) => (
+const TestimonialCard = memo(({ testimonial, index, prefersReducedMotion }) => (
   <motion.div
-    initial={{ opacity: 0, y: 30 }}
+    initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
+    transition={{ duration: 0.5, delay: prefersReducedMotion ? 0 : index * 0.1 }}
     className="glass-card glass-card-hover rounded-2xl p-6 md:p-8 h-full"
   >
     <Quote size={32} className="text-muted-foreground/30 mb-4" />
@@ -41,17 +42,28 @@ const TestimonialCard = ({ testimonial, index }) => (
       <p className="text-muted-foreground text-sm">{testimonial.role}</p>
     </div>
   </motion.div>
-);
+));
+
+TestimonialCard.displayName = 'TestimonialCard';
 
 const Testimonials = () => {
   const { theme } = useTheme();
   const paginationColor = theme === 'dark' ? 'swiper-pagination-light' : 'swiper-pagination-dark';
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+    const handler = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
   
   return (
     <section className="py-20 md:py-28 bg-background">
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
@@ -77,7 +89,7 @@ const Testimonials = () => {
           >
             {testimonials.map((testimonial, index) => (
               <SwiperSlide key={index}>
-                <TestimonialCard testimonial={testimonial} index={index} />
+                <TestimonialCard testimonial={testimonial} index={index} prefersReducedMotion={prefersReducedMotion} />
               </SwiperSlide>
             ))}
           </Swiper>
@@ -86,7 +98,7 @@ const Testimonials = () => {
         {/* Desktop Grid */}
         <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {testimonials.map((testimonial, index) => (
-            <TestimonialCard key={index} testimonial={testimonial} index={index} />
+            <TestimonialCard key={index} testimonial={testimonial} index={index} prefersReducedMotion={prefersReducedMotion} />
           ))}
         </div>
       </div>
@@ -94,4 +106,4 @@ const Testimonials = () => {
   );
 };
 
-export default Testimonials;
+export default memo(Testimonials);
