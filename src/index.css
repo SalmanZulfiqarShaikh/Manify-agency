@@ -281,11 +281,11 @@
   }
   
   .animate-marquee-fast {
-    animation: marquee 18s linear infinite;
+    animation: marquee 10s linear infinite;
   }
   
   .animate-marquee-infinite {
-    animation: marquee-infinite 25s linear infinite;
+    animation: marquee-infinite 15s linear infinite;
   }
 }
 
