@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index.jsx";
 import Legal from "./pages/Legal.jsx";
+import { Analytics } from "@vercel/analytics/react";
 import NotFound from "./pages/NotFound.jsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
         </Routes>
       </BrowserRouter>
     </TooltipProvider>
+    <Analytics />
   </QueryClientProvider>
 );
 
