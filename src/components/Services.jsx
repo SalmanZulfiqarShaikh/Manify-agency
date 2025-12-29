@@ -44,13 +44,13 @@ const services = [
 const getColorClasses = (color) => {
   switch (color) {
     case 'primary':
-      return 'text-primary group-hover:bg-primary/10 border-primary/20';
+      return 'text-foreground group-hover:bg-foreground/10 border-foreground/30';
     case 'secondary':
-      return 'text-secondary group-hover:bg-secondary/10 border-secondary/20';
+      return 'text-foreground group-hover:bg-foreground/10 border-foreground/30';
     case 'accent':
-      return 'text-accent group-hover:bg-accent/10 border-accent/20';
+      return 'text-foreground group-hover:bg-foreground/10 border-foreground/30';
     default:
-      return 'text-primary group-hover:bg-primary/10 border-primary/20';
+      return 'text-foreground group-hover:bg-foreground/10 border-foreground/30';
   }
 };
 

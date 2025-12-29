@@ -281,12 +281,20 @@
   }
   
   .animate-marquee-fast {
-    animation: marquee 6s linear infinite;
+    animation: marquee 4s linear infinite;
+  }
+  
+  .animate-marquee-fast:hover {
+    animation-play-state: paused;
   }
   
   @media (min-width: 768px) {
     .animate-marquee-fast {
       animation: marquee 10s linear infinite;
+    }
+    
+    .animate-marquee-fast:hover {
+      animation-play-state: paused;
     }
   }
   
