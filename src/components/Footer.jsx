@@ -25,7 +25,7 @@ const socialLinks = [
   {
     name: 'Instagram',
     icon: Instagram,
-    url: 'https://www.instagram.com/',
+    url: 'https://www.instagram.com/salmanzulfiqar_',
     label: 'Visit Instagram profile',
   },
 ];
