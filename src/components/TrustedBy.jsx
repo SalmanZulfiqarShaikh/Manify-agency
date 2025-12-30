@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme.jsx';
+import { oracle, zapier, reddit, dropbox } from '@/assets/trustedby';
 
 const logos = [
-  { name: "Google", src: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" },
-  { name: "Oracle", src: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg" },
-  { name: "Zapier", src: "https://upload.wikimedia.org/wikipedia/commons/f/fd/Zapier_logo.svg" },
-  { name: "Reddit", src: "https://images.icon-icons.com/2972/PNG/512/reddit_logo_icon_186876.png" },
-  { name: "Canva", src: "https://1000logos.net/wp-content/uploads/2023/02/Canva-logo.png" },
+  { name: "Oracle", src: oracle },
+  { name: "Zapier", src: zapier },
+  { name: "Reddit", src: reddit },
+  { name: "Dropbox", src: dropbox },
 ];
 
 const TrustedBy = () => {

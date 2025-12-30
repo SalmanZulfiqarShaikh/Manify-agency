@@ -1,6 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, memo, useState, useEffect } from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { demo1, demo2, demo3, demo4 } from '@/assets/demo';
 
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
@@ -8,22 +9,22 @@ const projects = [
   {
     title: 'SEO Dashboard',
     category: 'SEO Optimization',
-    image: 'https://cdn.dribbble.com/userupload/3727510/file/original-d5a961960f20255d075b714697306c27.png?format=webp&resize=400x300&vertical=center',
+    image: demo1,
   },
   {
     title: 'E-Commerce Platform',
     category: 'Web Development',
-    image: 'https://xdfile.com/wp-content/uploads/2020/03/lafyuu_ui_kit-1.jpg',
+    image: demo2,
   },
   {
     title: 'Mobile Banking App',
     category: 'App Development',
-    image: 'https://s3-alpha.figma.com/hub/file/866576731/c42b7715-5384-42b3-8328-2e7cea2d6ddf-cover.png',
+    image: demo3,
   },
   {
     title: 'AI Workflow System',
     category: 'AI Automation',
-    image: 'https://n8niostorageaccount.blob.core.windows.net/n8nio-strapi-blobs-prod/assets/image_d96a5a6593.png',
+    image: demo4,
   },
 ];
 

@@ -2,12 +2,13 @@ import { useState, useEffect, useRef, useCallback, memo, useMemo } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
+import {project1,project2,project3,project4} from '@/assets/projects';
 
 const projectImages = [
-  'https://preview.redd.it/from-bridge-troll-to-8-figure-boss-all-thanks-to-one-simple-v0-lbkmy9pulu0f1.jpeg?width=640&crop=smart&auto=webp&s=d1f9e7b8b24dabf27f0ced3ff1026a35c2bb3d7b',
-  'https://cdn.dribbble.com/userupload/16450697/file/original-e6936e0048bb5f3eff760e3182576c05.png?resize=400x0',
-  'https://cdn.dribbble.com/userupload/16394212/file/original-c93733561f565d650dce4b759a417fb0.png?resize=400x0',
-  'https://s3-alpha.figma.com/hub/file/5399439708/200334e3-04ba-4ce8-a267-17357790d405-cover.png',
+   project1,
+   project2,
+   project3,
+   project4,
 ];
 
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
