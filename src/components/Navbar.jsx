@@ -8,7 +8,6 @@ const navLinks = [
   { name: 'Services', href: '#services' },
   { name: 'Process', href: '#process' },
   { name: 'FAQ', href: '#faq' },
-  { name: 'Contact', href: '#contactstrip' },
 ];
 
 // Scroll to contact helper
