@@ -3,6 +3,7 @@ import { useRef, memo, useMemo, useEffect, useState } from 'react';
 import { ArrowRight, Sparkles, ExternalLink, Handshake } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme.jsx';
 
+
 const WHATSAPP_LINK = 'https://api.whatsapp.com/send/?phone=923230292151&text&type=phone_number&app_absent=0';
 const GITHUB_LINK = 'https://github.com/SalmanZulfiqarShaikh';
 
