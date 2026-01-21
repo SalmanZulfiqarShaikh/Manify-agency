@@ -15,23 +15,23 @@ const UpworkIcon = memo(() => (
 
 UpworkIcon.displayName = 'UpworkIcon';
 
-const FiverrIcon = memo(({ theme }) => (
+const FreelancerIcon = memo(({ theme }) => (
   <div className="w-16 h-10 flex items-center justify-center">
     <img 
-      src="https://logos-world.net/wp-content/uploads/2020/12/Fiverr-Logo.png" 
-      alt="Fiverr" 
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Freelancer_Logo.svg/800px-Freelancer_Logo.svg.png" 
+      alt="Freelancer" 
       loading="lazy"
       className="w-full h-full object-contain"
       style={{ filter: theme === 'dark' ? 'brightness(0) invert(1)' : 'grayscale(100%)' }}
       onError={(e) => {
         e.target.style.display = 'none';
-        e.target.parentElement.innerHTML = '<span class="text-lg font-bold">Fiverr</span>';
+        e.target.parentElement.innerHTML = '<span class="text-lg font-bold">Freelancer</span>';
       }}
     />
   </div>
 ));
 
-FiverrIcon.displayName = 'FiverrIcon';
+FreelancerIcon.displayName = 'FreelancerIcon';
 
 // Scroll to contact helper
 const scrollToContact = (e) => {
@@ -65,11 +65,11 @@ const ContactStrip = () => {
       icon: UpworkIcon,
     },
     {
-      name: 'Hire on Fiverr',
-      description: 'Level 2 seller with excellent reviews',
+      name: 'Hire on Freelancer',
+      description: 'Verified freelancer with excellent reviews',
       link: '#',
-      badge: 'Level 2',
-      icon: () => <FiverrIcon theme={theme} />,
+      badge: 'Verified',
+      icon: () => <FreelancerIcon theme={theme} />,
     },
     {
       name: 'Direct Hire',
