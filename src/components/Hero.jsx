@@ -77,9 +77,9 @@ const Hero = () => {
     };
   }, [handleMouseMove, prefersReducedMotion]);
 
-  // Memoize project cards array
+  // Memoize project cards array - duplicate enough for seamless loop
   const projectCards = useMemo(() => {
-    const images = [...projectImages, ...projectImages, ...projectImages];
+    const images = [...projectImages, ...projectImages, ...projectImages, ...projectImages];
     return images.map((img, index) => {
       const tiltPattern = index % 3;
       const tiltClass = tiltPattern === 0 
@@ -238,7 +238,7 @@ const Hero = () => {
       >
         <div 
           className={`flex ${prefersReducedMotion ? '' : 'animate-marquee-fast'}`}
-          style={{ willChange: 'transform' }}
+          style={{ willChange: 'transform', width: 'max-content' }}
         >
           {projectCards}
         </div>
