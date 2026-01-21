@@ -1,12 +1,11 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '../hooks/useTheme.jsx';
-import { oracle, zapier, reddit, dropbox } from '@/assets/trustedby';
+import { oracle, zapier, reddit } from '@/assets/trustedby';
 
 const logos = [
   { name: "Oracle", src: oracle },
   { name: "Zapier", src: zapier },
   { name: "Reddit", src: reddit },
-  { name: "Dropbox", src: dropbox },
 ];
 
 const TrustedBy = () => {
