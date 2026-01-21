@@ -299,7 +299,11 @@
   }
   
   .animate-marquee-infinite {
-    animation: marquee-infinite 15s linear infinite;
+    animation: marquee 15s linear infinite;
+  }
+  
+  .animate-marquee-infinite:hover {
+    animation-play-state: paused;
   }
 }
 
